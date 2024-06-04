@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# Author: 
+# Author: David Ward
 #
 
 # For Stage 1
@@ -8,7 +8,10 @@
 # or if the user does not provide a valid argument.
 #
 function print_usage () {
-	echo "print_usage"
+	echo "Usage:"
+	echo "myuseradd.sh -a <login> <passwd> <shell> - add a user account"
+	echo "myuseradd.sh -d <login>  - remove a user account"
+	echo "myuseradd.sh -h          - display this usage message"
 
 	#
 	# Add your implementation of print_usage here
@@ -58,7 +61,21 @@ function parse_command_options () {
 #		delete_user
 #	-a
 #		add_user
-	
+	case $1 in
+		-h)
+			print_usage
+			;;
+		-d)
+			delete_user
+			;;
+		-a)
+			add_user
+			;;
+		*)
+			echo -e "ERROR: Invalid option: $1\n"
+			print_usage
+			;;
+	esac
 }
 
 
