@@ -27,8 +27,15 @@ function print_usage () {
 # Arguments : userToDelete
 #
 function delete_user () {
-	echo "delete_user"
-
+	# echo "delete_user"
+	userToDelete=$1
+	# echo "User to delete: $userToDelete"
+	if id -u "$userToDelete" >/dev/null 2>&1; then
+			sudo userdel -r "$userToDelete"
+			echo "User $userToDelete is deleted"
+	else
+			echo "ERROR: $userToDelete does not exist"
+	fi
 }
 
 
@@ -62,11 +69,11 @@ function parse_command_options () {
 #	-a
 #		add_user
 	case $1 in
-		-h)
+		-h) 
 			print_usage
 			;;
 		-d)
-			delete_user
+			delete_user $2
 			;;
 		-a)
 			add_user
