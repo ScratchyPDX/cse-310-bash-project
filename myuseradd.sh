@@ -18,8 +18,6 @@ function print_usage () {
 	#
 }
 
-
-
 # For Stage 2:
 # Use this function to delete users as described in the
 # assignment instructions.
@@ -38,8 +36,6 @@ function delete_user () {
 	fi
 }
 
-
-
 # For Stage 3:
 # Use this function to add users as described in the
 # assignment instructions
@@ -47,7 +43,12 @@ function delete_user () {
 # Arguments : userToAdd, userPassword, shell
 # 
 function add_user () {
-	echo "add_user"
+	if id -u "$1" >/dev/null 2>&1; then
+		echo "ERROR: $1 exists"
+	else
+		useradd $1 -p $2 -s $3
+		echo "$1 ($2) with $3 is added"
+	fi
 }
 
 
@@ -76,7 +77,7 @@ function parse_command_options () {
 			delete_user $2
 			;;
 		-a)
-			add_user
+			add_user $2 $3 $4
 			;;
 		*)
 			echo -e "ERROR: Invalid option: $1\n"
