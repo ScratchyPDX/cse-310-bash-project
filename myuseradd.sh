@@ -46,7 +46,7 @@ function add_user () {
 	if id -u "$1" >/dev/null 2>&1; then
 		echo "ERROR: $1 exists"
 	else
-		useradd $1 -p $(openssl passwd -1 $2) -s $3
+		useradd $1 -p $(mkpasswd --method=SHA-512 --salt=random_salt $2) -s $3
 		echo "$1 ($2) with $3 is added"
 	fi
 }
